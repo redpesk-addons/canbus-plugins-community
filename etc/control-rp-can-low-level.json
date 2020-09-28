@@ -1,0 +1,37 @@
+{
+	"$schema": "",
+	"metadata": {
+		"uid": "Low Can",
+		"version": "1.0",
+		"api": "low-can",
+		"info": "Low CAN Configuration with community plugins"
+	},
+	"config": {
+		"active_message_set": 0,
+		"dev-mapping": {
+			"hs": "can0",
+			"ls": "can0",
+			"j1939": "can0"
+		},
+		"diagnostic_bus": "hs"
+	},
+	"plugins": [
+		{
+			"uid": "engine-signals",
+			"info": "engine signals",
+			"libs": "engine-signals.ctlso"
+		},{
+			"uid": "hvac-signals",
+			"info": "hvac signals",
+			"libs": "hvac-signals.ctlso"
+		},{
+			"uid": "obd2-signals",
+			"info": "obd2 signals",
+			"libs": "obd2-signals.ctlso"
+		},{
+			"uid": "vcar-signals",
+			"info": "vcar signals",
+			"libs": "vcar-signals.ctlso"
+		}
+	]
+}
