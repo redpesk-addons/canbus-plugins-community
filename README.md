@@ -255,7 +255,7 @@ $ cmake ..
 -- Configuring done
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/claneys/Workspace/Sources/IOTbzh/github/redpesk/redpesk-can-low-level-plugins/build
+-- Build files have been written to: /home/claneys/Workspace/Sources/IOTbzh/github/redpesk/community-can-low-level-plugins/build
 $ make gps-signals
 Scanning dependencies of target gps-signals
 [ 50%] Building CXX object src/gps/CMakeFiles/gps-signals.dir/gps-signals.cpp.o
@@ -450,7 +450,7 @@ INFO: API low-can added
 WARNING: [API low-can] CTL-INIT JSON file found but not used : /usr/local/rp-can-low-level/etc/control-rp-can-low-level.json [/home/claneys/Workspace/Sources/IOTbzh/gitlab/redpesk-common/libappcontroller/ctl-lib/ctl-config.c:93,ConfigSearch]
 WARNING: [API low-can] CTL-INIT JSON file found but not used : /home/claneys/Workspace/Sources/IOTbzh/gitlab/redpesk-common/rp-can-low-level/build/package/etc/control-rp-can-low-level.json [/home/claneys/Workspace/Sources/IOTbzh/gitlab/redpesk-common/libappcontroller/ctl-lib/ctl-config.c:93,ConfigSearch]
 INFO: [API low-can] CTL-LOAD-CONFIG: loading config filepath=/usr/local/rp-can-low-level/etc/control-rp-can-low-level.json
-DEBUG: [API low-can] Config { "active_message_set": 0, "dev-mapping": { "hs": "can0", "ls": "can0", "j1939": "can0" }, "diagnostic_bus": "hs" }
+DEBUG: [API low-can] Config { "active_message_set": 0, "dev-mapping": { "hs": "can0" }, "diagnostic_bus": "hs" }
 DEBUG: [API low-can] BCM socket ifr_name is : can0
 DEBUG: [API low-can] BCM socket ifr_name is : can0
 DEBUG: [API low-can] BCM socket ifr_name is : can0
