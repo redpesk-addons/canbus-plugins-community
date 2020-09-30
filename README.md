@@ -443,26 +443,35 @@ $ afb-daemon --name=afbd-rp-low-can-level --port=1234 --roothttp=. --tracereq=co
 --    ]
 --  }
 ------END OF CONFIG-----
-INFO: running with pid 34440
+INFO: running with pid 161605
 INFO: API monitor added
 INFO: binding [lib/afb-low-can-binding.so] looks like an AFB binding V3
 INFO: API low-can added
 WARNING: [API low-can] CTL-INIT JSON file found but not used : /usr/local/rp-can-low-level/etc/control-rp-can-low-level.json [/home/claneys/Workspace/Sources/IOTbzh/gitlab/redpesk-common/libappcontroller/ctl-lib/ctl-config.c:93,ConfigSearch]
 WARNING: [API low-can] CTL-INIT JSON file found but not used : /home/claneys/Workspace/Sources/IOTbzh/gitlab/redpesk-common/rp-can-low-level/build/package/etc/control-rp-can-low-level.json [/home/claneys/Workspace/Sources/IOTbzh/gitlab/redpesk-common/libappcontroller/ctl-lib/ctl-config.c:93,ConfigSearch]
 INFO: [API low-can] CTL-LOAD-CONFIG: loading config filepath=/usr/local/rp-can-low-level/etc/control-rp-can-low-level.json
-DEBUG: [API low-can] Config { "active_message_set": 0, "dev-mapping": { "hs": "can0" }, "diagnostic_bus": "hs" }
+DEBUG: [API low-can] Config { "active_message_set": 0, "dev-mapping": { "hs": "can0", "ls": "can0", "j1939": "can0" }, "diagnostic_bus": "hs" }
+DEBUG: [API low-can] BCM socket ifr_name is : can0
+DEBUG: [API low-can] BCM socket ifr_name is : can0
 DEBUG: [API low-can] BCM socket ifr_name is : can0
 DEBUG: [API low-can] Shims initialized
 DEBUG: [API low-can] Clearing existing diagnostic requests
 DEBUG: [API low-can] Diagnostic Manager initialized
 DEBUG: [API low-can] Plugin search path : '/usr/local/rp-can-low-level:/usr/local/rp-can-low-level/lib/..'
-NOTICE: [API low-can] CTL-PLUGIN-LOADONE gps successfully registered
-WARNING: [API low-can] Plugin multiple instances in searchpath will use /usr/local/rp-can-low-level/lib/plugins/gps-signals.ctlso [/home/claneys/Workspace/Sources/IOTbzh/gitlab/redpesk-common/libappcontroller/ctl-lib/ctl-plugin.c:247,LoadFoundPlugins]
+NOTICE: [API low-can] CTL-PLUGIN-LOADONE virtual-car successfully registered
+WARNING: [API low-can] Plugin multiple instances in searchpath will use /usr/local/rp-can-low-level/lib/plugins/vcar-signals.ctlso [/home/claneys/Workspace/Sources/IOTbzh/gitlab/redpesk-common/libappcontroller/ctl-lib/ctl-plugin.c:247,LoadFoundPlugins]
 INFO: Scanning dir=[/usr/local/lib64/afb] for bindings
-INFO: binding [/usr/local/lib64/afb/afb-dbus-binding.so] isn't an AFB binding
 DEBUG: Init config done
 NOTICE: API low-can starting...
-DEBUG: [API low-can] Found 0 signal(s)
+DEBUG: [API low-can] Found 1 signal(s)
+DEBUG: [API low-can] Found 2 signal(s)
+NOTICE: [API low-can] is_engine_on: engine.speed CAN signal found, but engine seems off
+NOTICE: [API low-can] is_engine_on: engine.speed diagnostic message found, but engine seems off
+WARNING: [API low-can] signal: Engine is off, diagnostic_messages.engine.speed won't received responses until it's on [/home/claneys/Workspace/Sources/IOTbzh/gitlab/redpesk-common/rp-can-low-level/low-can-binding/binding/low-can-cb.cpp:207,subscribe_unsubscribe_diagnostic_messages]
+DEBUG: [API low-can] BCM socket ifr_name is : can0
+DEBUG: [API low-can] Sending diagnostic request: arb_id: 0x7df, mode: 0x1, pid: 0xc, no payload
+DEBUG: [API low-can] BCM socket ifr_name is : can0
+DEBUG: [API low-can] Signal: diagnostic_messages.engine.speed subscribed
 INFO: API low-can started
 NOTICE: API monitor starting...
 INFO: API monitor started
@@ -489,80 +498,101 @@ $ afb-client-demo -H -d unix:/tmp/low-can
 list
 ON-REPLY 1:list: success
 [
-  "messages.gps.simulateur.bearing",
-  "messages.gps.simulateur.latitude",
-  "messages.gps.simulateur.longitude",
-  "messages.gps.simulateur.speed",
-  "messages.gps.attack.bearing",
-  "messages.gps.attack.latitude",
-  "messages.gps.attack.longitude",
-  "messages.gps.attack.speed",
-  "messages.gps.accelero.bearing",
-  "messages.gps.accelero.latitude",
-  "messages.gps.accelero.longitude",
-  "messages.gps.accelero.speed"
+  "messages.hvac.fan.speed",
+  "messages.hvac.temperature.left",
+  "messages.hvac.temperature.right",
+  "messages.hvac.temperature.average",
+  "messages.engine.speed",
+  "messages.fuel.level.low",
+  "messages.fuel.level",
+  "messages.vehicle.average.speed",
+  "messages.engine.oil.temp",
+  "messages.engine.oil.temp.high",
+  "messages.doors.boot.open",
+  "messages.doors.front_left.open",
+  "messages.doors.front_right.open",
+  "messages.doors.rear_left.open",
+  "messages.doors.rear_right.open",
+  "messages.windows.front_left.open",
+  "messages.windows.front_right.open",
+  "messages.windows.rear_left.open",
+  "messages.windows.rear_right.open",
+  "diagnostic_messages.engine.load",
+  "diagnostic_messages.engine.coolant.temperature",
+  "diagnostic_messages.fuel.pressure",
+  "diagnostic_messages.intake.manifold.pressure",
+  "diagnostic_messages.engine.speed",
+  "diagnostic_messages.vehicle.speed",
+  "diagnostic_messages.intake.air.temperature",
+  "diagnostic_messages.mass.airflow",
+  "diagnostic_messages.throttle.position",
+  "diagnostic_messages.running.time",
+  "diagnostic_messages.EGR.error",
+  "diagnostic_messages.fuel.level",
+  "diagnostic_messages.barometric.pressure",
+  "diagnostic_messages.ambient.air.temperature",
+  "diagnostic_messages.commanded.throttle.position",
+  "diagnostic_messages.ethanol.fuel.percentage",
+  "diagnostic_messages.accelerator.pedal.position",
+  "diagnostic_messages.hybrid.battery-pack.remaining.life",
+  "diagnostic_messages.engine.oil.temperature",
+  "diagnostic_messages.engine.fuel.rate",
+  "diagnostic_messages.engine.torque"
 ]
-subscribe {"event": "gps*"}
-ON-EVENT-CREATE: [1:low-can/messages.gps.simulateur.bearing]
-ON-EVENT-SUBSCRIBE 3:subscribe: [1]
-ON-EVENT-CREATE: [2:low-can/messages.gps.simulateur.latitude]
-ON-EVENT-SUBSCRIBE 3:subscribe: [2]
-ON-EVENT-CREATE: [3:low-can/messages.gps.simulateur.longitude]
-ON-EVENT-SUBSCRIBE 3:subscribe: [3]
-ON-EVENT-CREATE: [4:low-can/messages.gps.simulateur.speed]
-ON-EVENT-SUBSCRIBE 3:subscribe: [4]
-ON-EVENT-CREATE: [5:low-can/messages.gps.attack.bearing]
-ON-EVENT-SUBSCRIBE 3:subscribe: [5]
-ON-EVENT-CREATE: [6:low-can/messages.gps.attack.latitude]
-ON-EVENT-SUBSCRIBE 3:subscribe: [6]
-ON-EVENT-CREATE: [7:low-can/messages.gps.attack.longitude]
-ON-EVENT-SUBSCRIBE 3:subscribe: [7]
-ON-EVENT-CREATE: [8:low-can/messages.gps.attack.speed]
-ON-EVENT-SUBSCRIBE 3:subscribe: [8]
-ON-EVENT-CREATE: [9:low-can/messages.gps.accelero.bearing]
-ON-EVENT-SUBSCRIBE 3:subscribe: [9]
-ON-EVENT-CREATE: [10:low-can/messages.gps.accelero.latitude]
-ON-EVENT-SUBSCRIBE 3:subscribe: [10]
-ON-EVENT-CREATE: [11:low-can/messages.gps.accelero.longitude]
-ON-EVENT-SUBSCRIBE 3:subscribe: [11]
-ON-EVENT-CREATE: [12:low-can/messages.gps.accelero.speed]
-ON-EVENT-SUBSCRIBE 3:subscribe: [12]
-ON-REPLY 3:subscribe: success
+subscribe {"event": "doors*"}
+ON-EVENT-CREATE: [1:low-can/messages.doors.boot.open]
+ON-EVENT-SUBSCRIBE 2:subscribe: [1]
+ON-EVENT-CREATE: [2:low-can/messages.doors.front_left.open]
+ON-EVENT-SUBSCRIBE 2:subscribe: [2]
+ON-EVENT-CREATE: [3:low-can/messages.doors.front_right.open]
+ON-EVENT-SUBSCRIBE 2:subscribe: [3]
+ON-EVENT-CREATE: [4:low-can/messages.doors.rear_left.open]
+ON-EVENT-SUBSCRIBE 2:subscribe: [4]
+ON-EVENT-CREATE: [5:low-can/messages.doors.rear_right.open]
+ON-EVENT-SUBSCRIBE 2:subscribe: [5]
+ON-REPLY 2:subscribe: success
 null
-ON-EVENT-PUSH: [8]
-{
-  "id":292,
-  "name":"messages.gps.attack.speed",
-  "value":0.0,
-  "timestamp":1601302590185122
-}
 ON-EVENT-PUSH: [5]
 {
-  "id":292,
-  "name":"messages.gps.attack.bearing",
-  "value":0.0,
-  "timestamp":1601302590185226
+  "id":1568,
+  "name":"messages.doors.rear_right.open",
+  "value":false,
+  "timestamp":1601458833434743
 }
-ON-EVENT-PUSH: [6]
+ON-EVENT-PUSH: [1]
 {
-  "id":292,
-  "name":"messages.gps.attack.latitude",
-  "value":329.42880249023438,
-  "timestamp":1601302590185337
+  "id":1568,
+  "name":"messages.doors.boot.open",
+  "value":false,
+  "timestamp":1601458833434837
 }
-ON-EVENT-PUSH: [7]
+ON-EVENT-PUSH: [2]
 {
-  "id":292,
-  "name":"messages.gps.attack.longitude",
-  "value":239.43028259277344,
-  "timestamp":1601302590185392
+  "id":1568,
+  "name":"messages.doors.front_left.open",
+  "value":false,
+  "timestamp":1601458833434988
 }
-get { "event": "gps.attack.longitude" }
-ON-REPLY 4:get: success
+ON-EVENT-PUSH: [3]
+{
+  "id":1568,
+  "name":"messages.doors.front_right.open",
+  "value":false,
+  "timestamp":1601458833435048
+}
+ON-EVENT-PUSH: [4]
+{
+  "id":1568,
+  "name":"messages.doors.rear_left.open",
+  "value":false,
+  "timestamp":1601458833435083
+}
+get { "event": "doors.rear_left.open" }
+ON-REPLY 3:get: success
 [
   {
-    "event":"messages.gps.attack.longitude",
-    "value":239.43028259277344
+    "event":"messages.doors.rear_left.open",
+    "value":0.0
   }
 ]
 ```
