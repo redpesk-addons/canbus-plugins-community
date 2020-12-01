@@ -1,7 +1,7 @@
-# Redpesk CAN Low level binding's plugins
+# Redpesk canbus-binding's plugins
 
-You will find more advanced plugins in the repository using the CAN low level
-binding. This concern mainly ARS408 maritim Radar or handle the NMEA2000
+You will find more advanced plugins in the repository.
+This concern mainly ARS408 maritim Radar or handle the NMEA2000
 protocol by example.
 
 ## How to build
@@ -11,10 +11,10 @@ protocol by example.
 To build theses plugins you need the following development packages installed on
 your system:
 
-- rp-app-framework-binder
-- rp-can-low-level
-- rp-libappcontroller
-- rp-libafb-helpers
+- afb-binding-devel
+- canbus-binding-devel
+- afb-libcontroller
+- afb-libhelpers
 
 And the building tools:
 
@@ -131,17 +131,17 @@ $ sudo make install
 Do the same for the lib afb-helpers and appcontroller:
 
 ```bash
-git clone https://github.com/redpesk-common/libafb-helpers.git
-git clone https://github.com/redpesk-common/libappcontroller.git
-# install afb-helpers
-cd libafb-helpers
+git clone https://github.com/redpesk-common/afb-libhelpers.git
+git clone https://github.com/redpesk-common/afb-libcontroller.git
+# install afb-libhelpers
+cd afb-libhelpers
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=DEBUG ..
 make -j
 sudo make install
 # install appcontroller
-cd ../libappcontroller
+cd ../afb-libcontroller
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=DEBUG ..
@@ -149,11 +149,11 @@ make -j
 sudo make install
 ```
 
-Finally, get the CAN low level binding and install it:
+Finally, get the canbus-binding and install it:
 
 ```bash
-git clone https://github.com/redpesk-common/rp-can-low-level.git
-cd rp-can-low-level
+git clone https://github.com/redpesk-common/canbus-binding.git
+cd canbus-binding
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=DEBUG  -DCMAKE_INSTALL_PREFIX=/usr/local ..
@@ -174,8 +174,8 @@ and
 ***INSTRUCTIONS WHEN THE PUBLICS OBS PROJECTS AND REPOS WILL BE CREATED***
 ***INSTRUCTIONS WHEN THE PUBLICS OBS PROJECTS AND REPOS WILL BE CREATED***
 
-Install the can-low-level binding from official packages repositories if you
-want to test your **CAN low level**'s plugin natively on your host:
+Install the canbus-binding from official packages repositories if you
+want to test your **canbus-plugin** natively on your host:
 
 ^- Fedora
 
@@ -184,7 +184,7 @@ export DISTRO="Fedora_32"
 export REVISION=28
 source /etc/os-release ; export DISTRO="${NAME}_${VERSION_ID}"
 sudo wget -O /etc/yum.repos.d/redpesk_devel_${REVISION}.repo http://download.opensuse.org/repositories/IotBzh/redpesk_devel_${REVISION}/${DISTRO}/redpesk_devel_${REVISION}.repo
-sudo dnf install rp-can-low-level
+sudo dnf install canbus-binding
 ```
 
 ^- OpenSUSE
@@ -195,7 +195,7 @@ export REVISION=28
 source /etc/os-release; export DISTRO=$(echo $PRETTY_NAME | sed "s/ /_/g")
 sudo zypper ar http://download.opensuse.org/repositories/IotBzh/redpesk_devel_${REVISION}/${DISTRO}/redpesk_devel_${REVISION}.repo
 sudo zypper --gpg-auto-import-keys ref
-sudo zypper install rp-can-low-level
+sudo zypper install canbus-binding
 ```
 
 ^- Ubuntu
@@ -208,7 +208,7 @@ sudo bash -c "cat >> /etc/apt/sources.list.d/redpesk.list <<EOF
 deb http://download.opensuse.org/repositories/IotBzh/redpesk_devel_${REVISION}/${DISTRO}/ ./
 EOF"
 sudo apt-get update
-sudo apt-get install rp-can-low-level
+sudo apt-get install canbus-binding
 ```
 
 ^- Debian
@@ -221,7 +221,7 @@ sudo bash -c "cat >> /etc/apt/sources.list.d/redpesk.list <<EOF
 deb http://download.opensuse.org/repositories/IotBzh/redpesk_devel_${REVISION}/${DISTRO}/ ./
 EOF"
 sudo apt-get update
-sudo apt-get install rp-can-low-level
+sudo apt-get install canbus-binding
 ```
 
 ***INSTRUCTIONS WHEN THE PUBLICS OBS PROJECTS AND REPOS WILL BE CREATED***
@@ -261,7 +261,7 @@ $ cmake ..
 -- Configuring done
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/claneys/Workspace/Sources/IOTbzh/github/redpesk/community-can-low-level-plugins/build
+-- Build files have been written to: /home/claneys/Workspace/Sources/IOTbzh/github/redpesk/canbus-plugins-community/build
 $ make gps-signals
 Scanning dependencies of target gps-signals
 [ 50%] Building CXX object src/gps/CMakeFiles/gps-signals.dir/gps-signals.cpp.o
@@ -272,19 +272,19 @@ Scanning dependencies of target gps-signals
 ## How to use
 
 
-### Adapt the CAN low level configuration file
+### Adapt the canbus-binding configuration file
 
-Change the `control-rp-can-low-level.json` file by selecting the plugin(s) to
+Change the `control-canbus-binding.json` file by selecting the plugin(s) to
 load. Here is an example selecting the `gps-signals` plugin:
 
 ```json
 {
         "$schema": "",
         "metadata": {
-                "uid": "Low Can",
+                "uid": "CAN bus",
                 "version": "2.0",
-                "api": "low-can",
-                "info": "Low can Configuration"
+                "api": "canbus",
+                "info": "CAN bus Configuration"
         },
         "config": {
                 "active_message_set": 0,
@@ -407,7 +407,7 @@ $ cd build
 $ sudo make install
 Install the project...
 -- Install configuration: ""
--- Up-to-date: /usr/local/rp-can-low-level/etc/control-rp-can-low-level.json
+-- Up-to-date: /usr/local/canbus-binding/etc/control-canbus-binding.json
 $ make gps-signal
 Scanning dependencies of target gps-signals
 [ 50%] Building CXX object src/gps/CMakeFiles/gps-signals.dir/gps-signals.cpp.o
@@ -421,20 +421,20 @@ Scanning dependencies of target install_gps-signals
 Launch it using the `afb-daemon` (look out at the gps-signals.ctlso plugin load):
 
 ```bash
-$ afb-daemon --name=afbd-rp-low-can-level --port=1234 --roothttp=. --tracereq=common --token= --workdir=/usr/local/rp-can-low-level --binding=lib/afb-low-can-binding.so --ws-server=unix:/tmp/low-can -vvv
+$ afb-daemon --name=afbd-canbus-binding --port=1234 --roothttp=. --tracereq=common --token= --workdir=/var/local/lib/afm/applications/canbus-binding --binding=lib/afb-canbus-binding.so --ws-server=unix:/tmp/canbus -vvv
 ------BEGIN OF CONFIG-----
 -- {
---    "name": "afbd-rp-low-can-level",
+--    "name": "afbd-canbus-binding",
 --    "port": 1234,
 --    "roothttp": ".",
 --    "tracereq": "common",
 --    "token": "",
---    "workdir": "/usr/local/rp-can-low-level",
+--    "workdir": "/usr/local/canbus-binding",
 --    "binding": [
---      "lib/afb-low-can-binding.so"
+--      "lib/afb-canbus-binding.so"
 --    ],
 --    "ws-server": [
---      "unix:/tmp/low-can"
+--      "unix:/tmp/canbus"
 --    ],
 --    "apitimeout": 20,
 --    "cache-eol": 100000,
@@ -451,34 +451,34 @@ $ afb-daemon --name=afbd-rp-low-can-level --port=1234 --roothttp=. --tracereq=co
 ------END OF CONFIG-----
 INFO: running with pid 161605
 INFO: API monitor added
-INFO: binding [lib/afb-low-can-binding.so] looks like an AFB binding V3
-INFO: API low-can added
-WARNING: [API low-can] CTL-INIT JSON file found but not used : /usr/local/rp-can-low-level/etc/control-rp-can-low-level.json [/home/claneys/Workspace/Sources/IOTbzh/gitlab/redpesk-common/libappcontroller/ctl-lib/ctl-config.c:93,ConfigSearch]
-WARNING: [API low-can] CTL-INIT JSON file found but not used : /home/claneys/Workspace/Sources/IOTbzh/gitlab/redpesk-common/rp-can-low-level/build/package/etc/control-rp-can-low-level.json [/home/claneys/Workspace/Sources/IOTbzh/gitlab/redpesk-common/libappcontroller/ctl-lib/ctl-config.c:93,ConfigSearch]
-INFO: [API low-can] CTL-LOAD-CONFIG: loading config filepath=/usr/local/rp-can-low-level/etc/control-rp-can-low-level.json
-DEBUG: [API low-can] Config { "active_message_set": 0, "dev-mapping": { "hs": "can0" }, "diagnostic_bus": "hs" }
-DEBUG: [API low-can] BCM socket ifr_name is : can0
-DEBUG: [API low-can] BCM socket ifr_name is : can0
-DEBUG: [API low-can] BCM socket ifr_name is : can0
-DEBUG: [API low-can] Shims initialized
-DEBUG: [API low-can] Clearing existing diagnostic requests
-DEBUG: [API low-can] Diagnostic Manager initialized
-DEBUG: [API low-can] Plugin search path : '/usr/local/rp-can-low-level:/usr/local/rp-can-low-level/lib/..'
-NOTICE: [API low-can] CTL-PLUGIN-LOADONE virtual-car successfully registered
-WARNING: [API low-can] Plugin multiple instances in searchpath will use /usr/local/rp-can-low-level/lib/plugins/vcar-signals.ctlso [/home/claneys/Workspace/Sources/IOTbzh/gitlab/redpesk-common/libappcontroller/ctl-lib/ctl-plugin.c:247,LoadFoundPlugins]
+INFO: binding [lib/afb-canbus-binding.so] looks like an AFB binding V3
+INFO: API canbus added
+WARNING: [API canbus] CTL-INIT JSON file found but not used : /usr/local/canbus-binding/etc/control-canbus-binding.json [/home/claneys/Workspace/Sources/IOTbzh/gitlab/redpesk-common/libappcontroller/ctl-lib/ctl-config.c:93,ConfigSearch]
+WARNING: [API canbus] CTL-INIT JSON file found but not used : /home/claneys/Workspace/Sources/IOTbzh/gitlab/redpesk-common/canbus-binding/build/package/etc/control-canbus-binding.json [/home/claneys/Workspace/Sources/IOTbzh/gitlab/redpesk-common/libappcontroller/ctl-lib/ctl-config.c:93,ConfigSearch]
+INFO: [API canbus] CTL-LOAD-CONFIG: loading config filepath=/usr/local/canbus-binding/etc/control-canbus-binding.json
+DEBUG: [API canbus] Config { "active_message_set": 0, "dev-mapping": { "hs": "can0" }, "diagnostic_bus": "hs" }
+DEBUG: [API canbus] BCM socket ifr_name is : can0
+DEBUG: [API canbus] BCM socket ifr_name is : can0
+DEBUG: [API canbus] BCM socket ifr_name is : can0
+DEBUG: [API canbus] Shims initialized
+DEBUG: [API canbus] Clearing existing diagnostic requests
+DEBUG: [API canbus] Diagnostic Manager initialized
+DEBUG: [API canbus] Plugin search path : '/usr/local/canbus-binding:/usr/local/canbus-binding/lib/..'
+NOTICE: [API canbus] CTL-PLUGIN-LOADONE virtual-car successfully registered
+WARNING: [API canbus] Plugin multiple instances in searchpath will use /usr/local/canbus-binding/lib/plugins/vcar-signals.ctlso [/home/claneys/Workspace/Sources/IOTbzh/gitlab/redpesk-common/libappcontroller/ctl-lib/ctl-plugin.c:247,LoadFoundPlugins]
 INFO: Scanning dir=[/usr/local/lib64/afb] for bindings
 DEBUG: Init config done
-NOTICE: API low-can starting...
-DEBUG: [API low-can] Found 1 signal(s)
-DEBUG: [API low-can] Found 2 signal(s)
-NOTICE: [API low-can] is_engine_on: engine.speed CAN signal found, but engine seems off
-NOTICE: [API low-can] is_engine_on: engine.speed diagnostic message found, but engine seems off
-WARNING: [API low-can] signal: Engine is off, diagnostic_messages.engine.speed won't received responses until it's on [/home/claneys/Workspace/Sources/IOTbzh/gitlab/redpesk-common/rp-can-low-level/low-can-binding/binding/low-can-cb.cpp:207,subscribe_unsubscribe_diagnostic_messages]
-DEBUG: [API low-can] BCM socket ifr_name is : can0
-DEBUG: [API low-can] Sending diagnostic request: arb_id: 0x7df, mode: 0x1, pid: 0xc, no payload
-DEBUG: [API low-can] BCM socket ifr_name is : can0
-DEBUG: [API low-can] Signal: diagnostic_messages.engine.speed subscribed
-INFO: API low-can started
+NOTICE: API canbus starting...
+DEBUG: [API canbus] Found 1 signal(s)
+DEBUG: [API canbus] Found 2 signal(s)
+NOTICE: [API canbus] is_engine_on: engine.speed CAN signal found, but engine seems off
+NOTICE: [API canbus] is_engine_on: engine.speed diagnostic message found, but engine seems off
+WARNING: [API canbus] signal: Engine is off, diagnostic_messages.engine.speed won't received responses until it's on [/home/claneys/Workspace/Sources/IOTbzh/gitlab/redpesk-common/canbus-binding/canbus-binding/binding/canbus-cb.cpp:207,subscribe_unsubscribe_diagnostic_messages]
+DEBUG: [API canbus] BCM socket ifr_name is : can0
+DEBUG: [API canbus] Sending diagnostic request: arb_id: 0x7df, mode: 0x1, pid: 0xc, no payload
+DEBUG: [API canbus] BCM socket ifr_name is : can0
+DEBUG: [API canbus] Signal: diagnostic_messages.engine.speed subscribed
+INFO: API canbus started
 NOTICE: API monitor starting...
 INFO: API monitor started
 WARNING: unable to set the upload directory . [/home/claneys/Workspace/Sources/IOTbzh/github/redpesk-core/app-framework-binder/src/main-afb-daemon.c:373,start_http_server]
@@ -500,7 +500,7 @@ Then connect to your binding using the CLI utility provided with the `binder`
 and call directly API's verbs, ie:
 
 ```bash
-$ afb-client-demo -H -d unix:/tmp/low-can
+$ afb-client-demo -H -d unix:/tmp/canbus
 list
 ON-REPLY 1:list: success
 [
@@ -546,15 +546,15 @@ ON-REPLY 1:list: success
   "diagnostic_messages.engine.torque"
 ]
 subscribe {"event": "doors*"}
-ON-EVENT-CREATE: [1:low-can/messages.doors.boot.open]
+ON-EVENT-CREATE: [1:canbus/messages.doors.boot.open]
 ON-EVENT-SUBSCRIBE 2:subscribe: [1]
-ON-EVENT-CREATE: [2:low-can/messages.doors.front_left.open]
+ON-EVENT-CREATE: [2:canbus/messages.doors.front_left.open]
 ON-EVENT-SUBSCRIBE 2:subscribe: [2]
-ON-EVENT-CREATE: [3:low-can/messages.doors.front_right.open]
+ON-EVENT-CREATE: [3:canbus/messages.doors.front_right.open]
 ON-EVENT-SUBSCRIBE 2:subscribe: [3]
-ON-EVENT-CREATE: [4:low-can/messages.doors.rear_left.open]
+ON-EVENT-CREATE: [4:canbus/messages.doors.rear_left.open]
 ON-EVENT-SUBSCRIBE 2:subscribe: [4]
-ON-EVENT-CREATE: [5:low-can/messages.doors.rear_right.open]
+ON-EVENT-CREATE: [5:canbus/messages.doors.rear_right.open]
 ON-EVENT-SUBSCRIBE 2:subscribe: [5]
 ON-REPLY 2:subscribe: success
 null
