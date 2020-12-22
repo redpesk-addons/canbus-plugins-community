@@ -30,7 +30,7 @@ set(TARGET_NAME obd2-signals)
 	add_custom_target(generate_${TARGET_NAME} DEPENDS ${TARGET_NAME}.cpp)
 	target_sources(${TARGET_NAME} PRIVATE ${TARGET_NAME}.cpp)
 
-	# Alsa Plugin properties
+	# Plugin properties
 	SET_TARGET_PROPERTIES(${TARGET_NAME} PROPERTIES
 		LABELS "PLUGIN"
 		PREFIX ""
