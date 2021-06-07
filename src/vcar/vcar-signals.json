@@ -12,7 +12,7 @@
 			"is_j1939" : false,
 			"signals": {
 				"doors.driver.open": {
-					"generic_name": "doors.front_left.open",
+					"name": "doors.front_left.open",
 					"bit_position": 43,
 					"bit_size": 1,
 					"factor": 1.0,
@@ -20,7 +20,7 @@
 					"writable": true,
 					"decoder": "decoder_t::decode_boolean"},
 				"doors.passenger.open": {
-					"generic_name": "doors.front_right.open",
+					"name": "doors.front_right.open",
 					"bit_position": 44,
 					"bit_size": 1,
 					"factor": 1.0,
@@ -28,7 +28,7 @@
 					"writable": true,
 					"decoder": "decoder_t::decode_boolean"},
 				"doors.rearleft.open": {
-					"generic_name": "doors.rear_left.open",
+					"name": "doors.rear_left.open",
 					"bit_position": 46,
 					"bit_size": 1,
 					"factor": 1.0,
@@ -36,7 +36,7 @@
 					"writable": true,
 					"decoder": "decoder_t::decode_boolean"},
 				"doors.rearright.open": {
-					"generic_name": "doors.rear_right.open",
+					"name": "doors.rear_right.open",
 					"bit_position": 45,
 					"bit_size": 4,
 					"factor": 1.0,
@@ -44,7 +44,7 @@
 					"writable": true,
 					"decoder": "decoder_t::decode_boolean"},
 				"doors.coffer.open": {
-					"generic_name": "doors.boot.open",
+					"name": "doors.boot.open",
 					"bit_position": 47,
 					"bit_size": 1,
 					"factor": 1.0,
@@ -59,7 +59,7 @@
 			"is_j1939" : false,
 			"signals": {
 				"windows.driver.open": {
-					"generic_name": "windows.front_left.open",
+					"name": "windows.front_left.open",
 					"bit_position": 43,
 					"bit_size": 1,
 					"factor": 1.0,
@@ -67,7 +67,7 @@
 					"writable": true,
 					"decoder": "decoder_t::decode_boolean"},
 				"windows.passenger.open": {
-					"generic_name": "windows.front_right.open",
+					"name": "windows.front_right.open",
 					"bit_position": 44,
 					"bit_size": 1,
 					"factor": 1.0,
@@ -75,7 +75,7 @@
 					"writable": true,
 					"decoder": "decoder_t::decode_boolean"},
 				"windows.rearleft.open": {
-					"generic_name": "windows.rear_left.open",
+					"name": "windows.rear_left.open",
 					"bit_position": 46,
 					"bit_size": 1,
 					"factor": 1.0,
@@ -83,7 +83,7 @@
 					"writable": true,
 					"decoder": "decoder_t::decode_boolean"},
 				"windows.rearright.open": {
-					"generic_name": "windows.rear_right.open",
+					"name": "windows.rear_right.open",
 					"bit_position": 45,
 					"bit_size": 4,
 					"factor": 1.0,
@@ -99,7 +99,7 @@
 	"is_j1939" : false,
 	"signals": {
 		"PT_FuelLevelPct": {
-			"generic_name": "fuel.level",
+			"name": "fuel.level",
 			"bit_position": 8,
 			"bit_size": 8,
 			"factor": 0.392157,
@@ -107,7 +107,7 @@
 			"writable": true
 		},
 		"PT_EngineSpeed": {
-			"generic_name": "engine.speed",
+			"name": "engine.speed",
 			"bit_position": 16,
 			"bit_size": 16,
 			"factor": 0.25,
@@ -115,7 +115,7 @@
 			"writable": true
 		},
 		"PT_FuelLevelLow": {
-			"generic_name": "fuel.level.low",
+			"name": "fuel.level.low",
 			"bit_position": 55,
 			"bit_size": 1,
 			"factor": 1,
@@ -132,7 +132,7 @@
 	"is_j1939" : false,
 	"signals": {
 		"PT_EngineOilTempHigh": {
-			"generic_name": "engine.oil.temp.high",
+			"name": "engine.oil.temp.high",
 			"bit_position": 7,
 			"bit_size": 1,
 			"factor": 1,
@@ -141,7 +141,7 @@
 			"decoder": "decoder_t::decode_boolean"
 		},
 		"PT_EngineOilTemp": {
-			"generic_name": "engine.oil.temp",
+			"name": "engine.oil.temp",
 			"bit_position": 16,
 			"bit_size": 8,
 			"factor": 1,
@@ -157,7 +157,7 @@
 	"is_j1939" : false,
 	"signals": {
 		"PT_VehicleAvgSpeed": {
-			"generic_name": "vehicle.average.speed",
+			"name": "vehicle.average.speed",
 			"bit_position": 0,
 			"bit_size": 15,
 			"factor": 0.015625,
@@ -173,7 +173,7 @@
 	"is_j1939" : false,
 	"signals": {
 		"LeftTemperature": {
-			"generic_name": "hvac.temperature.left",
+			"name": "hvac.temperature.left",
 			"bit_position": 0,
 			"bit_size": 8,
 			"factor": 1,
@@ -181,7 +181,7 @@
 			"writable": true
 		},
 		"RightTemperature": {
-			"generic_name": "hvac.temperature.right",
+			"name": "hvac.temperature.right",
 			"bit_position": 8,
 			"bit_size": 8,
 			"factor": 1,
@@ -189,7 +189,7 @@
 			"writable": true
 		},
 		"Temperature": {
-			"generic_name": "hvac.temperature.average",
+			"name": "hvac.temperature.average",
 			"bit_position": 16,
 			"bit_size": 8,
 			"factor": 1,
@@ -197,7 +197,7 @@
 			"writable": true
 		},
 		"FanSpeed": {
-			"generic_name": "hvac.fan.speed",
+			"name": "hvac.fan.speed",
 			"bit_position": 32,
 			"bit_size": 8,
 			"factor": 23.529411765,
@@ -214,7 +214,7 @@
 	"length" : 8,
 	"signals": {
 		"SW_Previous": {
-			"generic_name": "steering_wheel.previous",
+			"name": "steering_wheel.previous",
 			"bit_position": 32,
 			"bit_size": 1,
 			"factor": 1,
@@ -223,7 +223,7 @@
 			"writable": false
 		},
 		"SW_VolumeUp": {
-			"generic_name": "steering_wheel.volume.up",
+			"name": "steering_wheel.volume.up",
 			"bit_position": 33,
 			"bit_size": 1,
 			"factor": 1,
@@ -232,7 +232,7 @@
 			"writable": false
 		},
 		"SW_Mode": {
-			"generic_name": "steering_wheel.mode",
+			"name": "steering_wheel.mode",
 			"bit_position": 34,
 			"bit_size": 1,
 			"factor": 1,
@@ -241,7 +241,7 @@
 			"writable": false
 		},
 		"SW_VolumeDown": {
-			"generic_name": "steering_wheel.volume.down",
+			"name": "steering_wheel.volume.down",
 			"bit_position": 35,
 			"bit_size": 1,
 			"factor": 1,
@@ -250,7 +250,7 @@
 			"writable": false
 		},
 		"SW_Next": {
-			"generic_name": "steering_wheel.next",
+			"name": "steering_wheel.next",
 			"bit_position": 36,
 			"bit_size": 1,
 			"factor": 1,
@@ -259,7 +259,7 @@
 			"writable": false
 		},
 		"SW_Info": {
-			"generic_name": "steering_wheel.info",
+			"name": "steering_wheel.info",
 			"bit_position": 38,
 			"bit_size": 1,
 			"factor": 1,
@@ -268,7 +268,7 @@
 			"writable": false
 		},
 		"SW_VolumeMute": {
-			"generic_name": "steering_wheel.volume.mute",
+			"name": "steering_wheel.volume.mute",
 			"bit_position": 39,
 			"bit_size": 1,
 			"factor": 1,
@@ -277,7 +277,7 @@
 			"writable": false
 		},
 		"SW_Voice": {
-			"generic_name": "steering_wheel.voice",
+			"name": "steering_wheel.voice",
 			"bit_position": 45,
 			"bit_size": 1,
 			"factor": 1,
@@ -286,7 +286,7 @@
 			"writable": false
 		},
 		"SW_PhoneHangup": {
-			"generic_name": "steering_wheel.phone.hangup",
+			"name": "steering_wheel.phone.hangup",
 			"bit_position": 46,
 			"bit_size": 1,
 			"factor": 1,
@@ -295,7 +295,7 @@
 			"writable": false
 		},
 		"SW_PhoneCall": {
-			"generic_name": "steering_wheel.phone.call",
+			"name": "steering_wheel.phone.call",
 			"bit_position": 47,
 			"bit_size": 1,
 			"factor": 1,
@@ -304,7 +304,7 @@
 			"writable": false
 		},
 		"SW_CruiseEnable": {
-			"generic_name": "steering_wheel.cruise.enable",
+			"name": "steering_wheel.cruise.enable",
 			"bit_position": 48,
 			"bit_size": 1,
 			"factor": 1,
@@ -313,7 +313,7 @@
 			"writable": false
 		},
 		"SW_CruiseResume": {
-			"generic_name": "steering_wheel.cruise.resume",
+			"name": "steering_wheel.cruise.resume",
 			"bit_position": 49,
 			"bit_size": 1,
 			"factor": 1,
@@ -322,7 +322,7 @@
 			"writable": false
 		},
 		"SW_CruiseSet": {
-			"generic_name": "steering_wheel.cruise.set",
+			"name": "steering_wheel.cruise.set",
 			"bit_position": 51,
 			"bit_size": 1,
 			"factor": 1,
@@ -331,7 +331,7 @@
 			"writable": false
 		},
 		"SW_CruiseCancel": {
-			"generic_name": "steering_wheel.cruise.cancel",
+			"name": "steering_wheel.cruise.cancel",
 			"bit_position": 52,
 			"bit_size": 1,
 			"factor": 1,
@@ -340,7 +340,7 @@
 			"writable": false
 		},
 		"SW_CruiseLimit": {
-			"generic_name": "steering_wheel.cruise.limit",
+			"name": "steering_wheel.cruise.limit",
 			"bit_position": 54,
 			"bit_size": 1,
 			"factor": 1,
@@ -349,7 +349,7 @@
 			"writable": false
 		},
 		"SW_CruiseDistance": {
-			"generic_name": "steering_wheel.cruise.distance",
+			"name": "steering_wheel.cruise.distance",
 			"bit_position": 55,
 			"bit_size": 1,
 			"factor": 1,
@@ -358,7 +358,7 @@
 			"writable": false
 		},
 		"SW_Horn": {
-			"generic_name": "steering_wheel.horn",
+			"name": "steering_wheel.horn",
 			"bit_position": 56,
 			"bit_size": 1,
 			"factor": 1,
@@ -367,7 +367,7 @@
 			"writable": false
 		},
 		"SW_LaneDepartureWarning": {
-			"generic_name": "steering_wheel.lane_departure_warning",
+			"name": "steering_wheel.lane_departure_warning",
 			"bit_position": 63,
 			"bit_size": 1,
 			"factor": 1,
