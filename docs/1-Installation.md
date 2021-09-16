@@ -69,7 +69,7 @@ want to test your **canbus-plugin** natively on your host:
 export DISTRO="Fedora_33"
 export REVISION=33
 source /etc/os-release ; export DISTRO="${NAME}_${VERSION_ID}"
-sudo wget -O /etc/yum.repos.d/redpesk_devel_${REVISION}.repo https://download.redpesk.bzh/redpesk-devel/releases/${REVISION}/sdk/redpesk-sdk_fedora.repo
+sudo wget -O /etc/yum.repos.d/redpesk_devel_${REVISION}.repo https://primary-mirror.redpesk.iot/redpesk-devel/releases/${REVISION}/sdk/redpesk-sdk_fedora.repo
 sudo dnf install canbus-binding
 ```
 
@@ -79,7 +79,7 @@ sudo dnf install canbus-binding
 export DISTRO="openSUSE_Leap_15.2"
 export REVISION=33
 source /etc/os-release; export DISTRO=$(echo $PRETTY_NAME | sed "s/ /_/g")
-sudo zypper ar https://download.redpesk.bzh/redpesk-devel/releases/${REVISION}/sdk/redpesk-sdk_suse.repo
+sudo zypper ar https://primary-mirror.redpesk.iot/redpesk-devel/releases/${REVISION}/sdk/redpesk-sdk_suse.repo
 sudo zypper --gpg-auto-import-keys ref
 sudo zypper install canbus-binding
 ```
@@ -89,9 +89,9 @@ sudo zypper install canbus-binding
 ```bash
 export DISTRO="xUbuntu_20.04"
 export REVISION="33"
-wget -O - https://download.redpesk.bzh/redpesk-devel/releases/${REVISION}/sdk/${DISTRO}/Release.key | sudo apt-key add -
+wget -O - https://primary-mirror.redpesk.iot/redpesk-devel/releases/${REVISION}/sdk/${DISTRO}/Release.key | sudo apt-key add -
 sudo bash -c "cat >> /etc/apt/sources.list.d/redpesk.list <<EOF
-deb https://download.redpesk.bzh/redpesk-devel/releases/${REVISION}/sdk/${DISTRO}/ ./
+deb https://primary-mirror.redpesk.iot/redpesk-devel/releases/${REVISION}/sdk/${DISTRO}/ ./
 EOF"
 sudo apt-get update
 sudo apt-get install canbus-binding
@@ -102,9 +102,9 @@ sudo apt-get install canbus-binding
 ```bash
 export DISTRO="Debian_10"
 export REVISION="33"
-wget -O - https://download.redpesk.bzh/redpesk-devel/releases/${REVISION}/sdk/${DISTRO}/Release.key | sudo apt-key add -
+wget -O - https://primary-mirror.redpesk.iot/redpesk-devel/releases/${REVISION}/sdk/${DISTRO}/Release.key | sudo apt-key add -
 sudo bash -c "cat >> /etc/apt/sources.list.d/redpesk.list <<EOF
-deb https://download.redpesk.bzh/redpesk-devel/releases/${REVISION}/sdk/${DISTRO}/ ./
+deb https://primary-mirror.redpesk.iot/redpesk-devel/releases/${REVISION}/sdk/${DISTRO}/ ./
 EOF"
 sudo apt-get update
 sudo apt-get install canbus-binding
