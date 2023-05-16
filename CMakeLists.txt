@@ -1,8 +1,6 @@
 ###########################################################################
 # Copyright 2015 - 2018 IoT.bzh
 #
-# author: Romain Forlot <romain.forlot@iot.bzh>
-#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -20,11 +18,10 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 
 # Project Info
 # ------------------
-set(PROJECT_NAME canbus-plugins-community)
-set(PROJECT_AUTHOR "Romain Forlot")
-set(PROJECT_AUTHOR_MAIL "romain.forlot@iot.bzh")
-set(PROJECT_LANGUAGES "C;CXX")
-project(${PROJECT_NAME} DESCRIPTION "Plugins for the CAN low level Binding")
+project(canbus-plugins-community
+	VERSION 1.1.0
+	DESCRIPTION "Plugins for the CAN low level Binding"
+	LANGUAGES C CXX)
 
 include(FindPkgConfig)
 include(GNUInstallDirs)
@@ -52,6 +49,7 @@ pkg_check_modules(modules REQUIRED canbus-binding afb-libhelpers afb-libcontroll
 
 add_compile_options(${modules_CFLAGS})
 add_link_options(${modules_LDFLAGS})
+link_libraries(${modules_LINK_LIBRARIES})
 
 file(GLOB plugin_dirs LIST_DIRECTORIES true src/*)
 
