@@ -29,6 +29,7 @@ include(CTest)
 enable_testing()
 
 set(CAN_LOW_LEVEL_BINDING_NAME "canbus-binding" CACHE STRING "Name of the CAN low level binding. Needed to install the config and plugin at the correct place")
+option(USE_LEGACY_CONTROLLER "Generate plugins using legacy controller" NO)
 
 # Compilation Mode (DEBUG, RELEASE)
 # ----------------------------------
@@ -45,15 +46,54 @@ list (APPEND link_libraries -pthread)
 
 add_subdirectory("etc")
 
-pkg_check_modules(modules REQUIRED canbus-binding afb-libhelpers afb-libcontroller)
+find_program(cbpgen can-config-generator REQUIRED)
+if(USE_LEGACY_CONTROLLER)
+	set(mods canbus-binding afb-libhelpers afb-libcontroller)
+	set(cbpgenopt -3)
+else(USE_LEGACY_CONTROLLER)
+	set(mods canbus-binding>=2)
+	set(cbpgenopt -4)
+endif(USE_LEGACY_CONTROLLER)
+pkg_check_modules(modules REQUIRED ${mods})
 
 add_compile_options(${modules_CFLAGS})
 add_link_options(${modules_LDFLAGS})
 link_libraries(${modules_LINK_LIBRARIES})
 
-file(GLOB plugin_dirs LIST_DIRECTORIES true src/*)
+set(TARGETS_LIST "" CACHE INTERNAL "Enumerate targets")
 
-set(TARGETS_LIST "" CACHE INTERNAL "Enumarate targets")
+function(add_canbus_plugin NAME)
+
+	# Define targets
+	add_library(${NAME} SHARED
+		${CMAKE_CURRENT_BINARY_DIR}/${NAME}.cpp)
+
+	# Create dedicated generate targets
+	add_custom_command(COMMAND ${cbpgen} ${cbpgenopt}
+				-m ${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.json
+				-o ${CMAKE_CURRENT_BINARY_DIR}/${NAME}.cpp
+			OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${NAME}.cpp)
+	add_custom_target(generate_${NAME}_source
+			DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${NAME}.cpp)
+
+	# Plugin properties
+	SET_TARGET_PROPERTIES(${NAME} PROPERTIES
+		PREFIX ""
+		OUTPUT_NAME ${NAME}
+	)
+	if(USE_LEGACY_CONTROLLER)
+		SET_TARGET_PROPERTIES(${NAME} PROPERTIES
+			SUFFIX ".ctlso"
+		)
+	endif(USE_LEGACY_CONTROLLER)
+
+	set(TARGETS_LIST "${TARGETS_LIST};${NAME}" CACHE INTERNAL "Enumerate targets" FORCE)
+endfunction(add_canbus_plugin)
+
+
+
+
+file(GLOB plugin_dirs LIST_DIRECTORIES true src/*)
 
 foreach(dir ${plugin_dirs})
 	add_subdirectory(${dir} EXCLUDE_FROM_ALL)
@@ -74,3 +114,6 @@ foreach(target ${TARGETS_LIST})
 	)
 	add_dependencies(install_${target} ${target})
 endforeach()
+
+
+
