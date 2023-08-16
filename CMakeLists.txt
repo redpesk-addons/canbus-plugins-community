@@ -19,7 +19,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 # Project Info
 # ------------------
 project(canbus-plugins-community
-	VERSION 1.1.0
+	VERSION 2.0.0
 	DESCRIPTION "Plugins for the CAN low level Binding"
 	LANGUAGES C CXX)
 
@@ -29,91 +29,71 @@ include(CTest)
 enable_testing()
 
 set(CAN_LOW_LEVEL_BINDING_NAME "canbus-binding" CACHE STRING "Name of the CAN low level binding. Needed to install the config and plugin at the correct place")
+set(AFM_APP_DIR ${CMAKE_INSTALL_PREFIX}/redpesk CACHE PATH "Application directory of redpesk")
 option(USE_LEGACY_CONTROLLER "Generate plugins using legacy controller" NO)
-
-# Compilation Mode (DEBUG, RELEASE)
-# ----------------------------------
-set(CMAKE_BUILD_TYPE "RELEASE" CACHE STRING "Default Build variant chosen. (Overwritten by cli if given)")
-
-# Prefix path where will be installed the files
-# Default: /usr/local (need root permission to write in)
-# ------------------------------------------------------
-set(INSTALL_PREFIX $ENV{HOME}/opt)
-
-# Customize link option
-# -----------------------------
-list (APPEND link_libraries -pthread)
-
-add_subdirectory("etc")
+option(MAKEALL "Make and install all" YES)
 
 find_program(cbpgen can-config-generator REQUIRED)
+if(NOT cbpgen)
+	message(FATAL_ERROR "Can not locate can-config-generator")
+endif(NOT cbpgen)
+
 if(USE_LEGACY_CONTROLLER)
 	set(mods canbus-binding afb-libhelpers afb-libcontroller)
 	set(cbpgenopt -3)
+	set(afbver 3)
+	set(ext .ctlso)
 else(USE_LEGACY_CONTROLLER)
 	set(mods canbus-binding>=2)
 	set(cbpgenopt -4)
+	set(afbver 4)
+	set(ext .so)
 endif(USE_LEGACY_CONTROLLER)
-pkg_check_modules(modules REQUIRED ${mods})
+if(NOT MAKEALL)
+	set(exclude EXCLUDE_FROM_ALL)
+endif(NOT MAKEALL)
 
+
+pkg_check_modules(modules REQUIRED ${mods})
 add_compile_options(${modules_CFLAGS})
 add_link_options(${modules_LDFLAGS})
 link_libraries(${modules_LINK_LIBRARIES})
 
-set(TARGETS_LIST "" CACHE INTERNAL "Enumerate targets")
-
 function(add_canbus_plugin NAME)
 
-	# Define targets
-	add_library(${NAME} SHARED
-		${CMAKE_CURRENT_BINARY_DIR}/${NAME}.cpp)
+	message("=== Including plugin: '${NAME}'")
 
 	# Create dedicated generate targets
 	add_custom_command(COMMAND ${cbpgen} ${cbpgenopt}
 				-m ${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.json
 				-o ${CMAKE_CURRENT_BINARY_DIR}/${NAME}.cpp
 			OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${NAME}.cpp)
-	add_custom_target(generate_${NAME}_source
-			DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${NAME}.cpp)
 
-	# Plugin properties
-	SET_TARGET_PROPERTIES(${NAME} PROPERTIES
-		PREFIX ""
-		OUTPUT_NAME ${NAME}
-	)
-	if(USE_LEGACY_CONTROLLER)
-		SET_TARGET_PROPERTIES(${NAME} PROPERTIES
-			SUFFIX ".ctlso"
-		)
-	endif(USE_LEGACY_CONTROLLER)
+	# Define targets
+	add_library(${NAME} SHARED ${exclude} ${CMAKE_CURRENT_BINARY_DIR}/${NAME}.cpp)
+	target_compile_definitions(${NAME} PRIVATE AFB_BINDING_VERSION=${afbver})
+	set_target_properties(${NAME} PROPERTIES PREFIX plugin- SUFFIX ${ext})
 
-	set(TARGETS_LIST "${TARGETS_LIST};${NAME}" CACHE INTERNAL "Enumerate targets" FORCE)
+	# Install as redpesk component
+	configure_file(
+		${CMAKE_SOURCE_DIR}/manifest.yml.in
+		${CMAKE_CURRENT_BINARY_DIR}/manifest.yml
+		@ONLY)
+
+        install(TARGETS ${NAME} DESTINATION ${AFM_APP_DIR}/${NAME}/lib
+	        COMPONENT ${NAME} ${exclude})
+        install(FILES ${CMAKE_CURRENT_BINARY_DIR}/manifest.yml DESTINATION ${AFM_APP_DIR}/${NAME}/.rpconfig
+	        COMPONENT ${NAME} ${exclude})
+
 endfunction(add_canbus_plugin)
 
-
-
-
 file(GLOB plugin_dirs LIST_DIRECTORIES true src/*)
-
 foreach(dir ${plugin_dirs})
-	add_subdirectory(${dir} EXCLUDE_FROM_ALL)
+	add_subdirectory(${dir})
 endforeach()
 
-foreach(target ${TARGETS_LIST})
-	target_compile_definitions(${target} PRIVATE AFB_BINDING_VERSION=3)
-	get_target_property(pre ${target} PREFIX)
-	get_target_property(out ${target} OUTPUT_NAME)
-	get_target_property(suf ${target} SUFFIX)
-	get_target_property(bdir ${target} BINARY_DIR)
-	message("=== Including plugin: '${target}'")
-	# Create the dedicated install targets
-	add_custom_target(install_${target}
-		COMMAND install -d \${DESTDIR}${CMAKE_INSTALL_PREFIX}/${CAN_LOW_LEVEL_BINDING_NAME}/lib/plugins
-		COMMAND install ${bdir}/${pre}${out}${suf} \${DESTDIR}${CMAKE_INSTALL_PREFIX}/${CAN_LOW_LEVEL_BINDING_NAME}/lib/plugins
-		COMMAND
-	)
-	add_dependencies(install_${target} ${target})
-endforeach()
-
-
-
+if(NOT MAKEALL)
+	message("")
+	message(" for installing plugin X type: make X && cmake -DCOMPONENT=X -P cmake_install.cmake")
+	message("")
+endif(NOT MAKEALL)
