@@ -19,7 +19,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 # Project Info
 # ------------------
 project(canbus-plugins-community
-	VERSION 2.0.0
+	VERSION 2.0.1
 	DESCRIPTION "Plugins for the CAN low level Binding"
 	LANGUAGES C CXX)
 
