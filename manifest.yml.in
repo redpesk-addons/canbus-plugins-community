@@ -9,7 +9,7 @@ targets:
   - target: main
     content:
       src: lib/plugin-@NAME@.so
-      type: application/x-canbus-plugin
+      type: application/vnd.agl.resource
     required-permission:
       - urn:redpesk:permission:canbus-binding:partner:export:plug
 plugs:
